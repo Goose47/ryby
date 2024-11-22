@@ -1,0 +1,72 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: api_nginx
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./api:/var/www/api
+      - ./api/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    networks:
+      - api
+
+
+  certbot:
+    image: certbot/certbot
+    container_name: api_certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+
+
+  laravel:
+    container_name: api_laravel
+    tty: true
+    restart: unless-stopped
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    volumes:
+      - ./api:/var/www/api
+    networks:
+      - api
+    depends_on:
+      - pgsql
+
+
+  react:
+    container_name: react
+    tty: true
+    restart: unless-stopped
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+
+
+  pgsql:
+    container_name: api_postgres
+    restart: unless-stopped
+    image: postgres:14
+    ports:
+      - '127.0.0.1:5432:5432'
+    environment:
+      PGUSER: 'test'
+      PGPASSWORD: 'test'
+      POSTGRES_DB: 'test'
+      POSTGRES_USER: 'test'
+      POSTGRES_PASSWORD: 'test'
+    volumes:
+      - 'ryby-pgsql:/var/lib/postgresql/data'
+    networks:
+      - api
+networks:
+  api:
+    driver: bridge
+volumes:
+  ryby-pgsql:
+    driver: local
