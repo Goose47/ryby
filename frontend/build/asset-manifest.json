@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6e6a6d5c.css",
+    "main.js": "/static/js/main.5a64c766.js",
+    "static/media/cra-logo.svg": "/static/media/cra-logo.d3531aeba7ef705bd982.svg",
+    "static/media/gravity-logo-dark.svg": "/static/media/gravity-logo-dark.4e1ff1bebbdba13902df.svg",
+    "static/media/gravity-logo-light.svg": "/static/media/gravity-logo-light.bf5738003f8e116e83f4.svg",
+    "index.html": "/index.html",
+    "main.6e6a6d5c.css.map": "/static/css/main.6e6a6d5c.css.map",
+    "main.5a64c766.js.map": "/static/js/main.5a64c766.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6e6a6d5c.css",
+    "static/js/main.5a64c766.js"
+  ]
+}
